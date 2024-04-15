@@ -50,7 +50,7 @@ function Category({ categories, onSelectCategory, onShowModalCategory }) {
         </div>
         <ul>
           {categories.map((category, index) => (
-            <li key={index} onClick={() => onSelectCategory(index)}>
+            <li key={category} onClick={() => onSelectCategory(category)}>
               {category.name}
               
               <span className="badge bg-primary rounded-pill">2</span>

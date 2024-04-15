@@ -1,31 +1,38 @@
 import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
+import { postNotes, putCategory } from '../../services/notesServices';
 
-function NewNote({ onAddNote, onShowModalNote,categoryId, categories, setCategories }) {
+function NewNote({ onShowModalNote,categoryId, categories, setCategories }) {
 
 const [name, setName] = useState('');
   const [content, setContent] = useState('');
+  const [autor, setAutor] = useState('');
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
 
     const newNote = {
-      id: Date.now(),
-      name: name,
-      content: content
+      title: name,
+      content: content,
+      autor: autor
     };
 
     const updatedCategories = categories.map((category,index) => {
-      if (index === categoryId) {
-        debugger
+      if (category._id === categoryId) {
         return {
           ...category,
-          lists: [...category.lists, newNote]
+          notes: [...category.notes, newNote]
         };
       }
       return category;
     });
     setCategories(updatedCategories);
+
+    try {
+      const response = await postNotes(categoryId,newNote);  
+    } catch (error) {
+        console.error('Error al guardar la nota:', error);
+    }
 
     setName('');
     setContent('');
@@ -58,6 +65,16 @@ const [name, setName] = useState('');
             onChange={(e) => setName(e.target.value)}
             required
           />
+          <input
+          type="text"
+          required
+          className="form-control"
+          id="Autor"
+          value={autor}
+          onChange={(e) => setAutor(e.target.value)}
+          placeholder="Autor"
+          
+        />
           <textarea
             placeholder="Cuerpo de la nota"
             className="form-control"

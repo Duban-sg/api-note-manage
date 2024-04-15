@@ -21,7 +21,7 @@ function NoteList ({ notes, onNoteSelect , onDeleteNote}) {
         <h2>Notas</h2>
         <ul>
           {notes.map((note, index) => (
-            <li key={index} onClick={() => onNoteSelect(index)}>
+            <li key={index} onClick={() => onNoteSelect(note)}>
               {note.title}
               <button onClick={() => handleDeleteNote(note._id)}>x</button>
             </li>

@@ -1,8 +1,9 @@
 import settings from "../utils/settings";
-async function getNotes() {
+
+async function getCategory() {
     try {
-        console.log(settings.REACT_APP_URL_API_SERVER )
-        const response = await fetch(settings.REACT_APP_URL_API_SERVER + 'notas');
+        console.log('url'+settings.REACT_APP_URL_API_SERVER )
+        const response = await fetch(settings.REACT_APP_URL_API_SERVER + 'categorias');
         if (!response.ok) {
             throw new Error('No se pudo obtener las notas. Código de estado: ' + response.status);
         }
@@ -14,16 +15,20 @@ async function getNotes() {
     }
 }
 
-async function postNotes(title, content){
+async function postCategory({CategoriasIn}){
+    console.log(JSON.stringify({CategoriasIn }))
     try{
-        const response = await fetch(settings.REACT_APP_URL_API_SERVER+'notas', {
+        
+        const response = await fetch(settings.REACT_APP_URL_API_SERVER+'categorias', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ title, content })
+            
+            body: JSON.stringify(CategoriasIn)
+            
           });
-    
+    debugger
           if (!response.ok) {
             throw new Error('Error al crear una nueva nota');
           }
@@ -31,19 +36,18 @@ async function postNotes(title, content){
         return(response);
     }catch(error){
         return(error);
-    }
-    
+    }    
 }
 
-async function putNote(editedNote){
+async function putCategory(editedCategory){
     try {
-        console.log(editedNote._id);
-        const response = await fetch(settings.REACT_APP_URL_API_SERVER+`notas/${editedNote._id}`, {
+        console.log(editedCategory._id);
+        const response = await fetch(settings.REACT_APP_URL_API_SERVER+`notas/${editedCategory._id}`, {
             method: 'PUT',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(editedNote)
+            body: JSON.stringify(editedCategory)
         });
 
         if (!response.ok) {
@@ -73,4 +77,26 @@ export async function deleteNote(noteId) {
     }
 }
 
-export { getNotes, postNotes, putNote};
+async function postNotes(idCategoria,nota){
+    console.log(JSON.stringify(nota))
+    try{
+        console.log('url'+settings.REACT_APP_URL_API_SERVER+`notas/${idCategoria}` )
+        const response = await fetch(settings.REACT_APP_URL_API_SERVER+`notas/${idCategoria}`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json'
+            },
+            
+            body: JSON.stringify(nota)
+            
+          });
+          if (!response.ok) {
+            throw new Error('Error al crear una nueva nota');
+          }
+
+        return(response);
+    }catch(error){
+        return(error);
+    }    
+}
+export { getCategory, postCategory, putCategory,postNotes};

@@ -50,7 +50,7 @@ function App() {
       <div style={{ display: isOpen ? "none" : "block" }}>
 
       </div>
-
+ 
       <div>sdsd</div>
       <NoteViewer
         key={{}.id}
@@ -88,7 +88,7 @@ function App() {
           <NewNote
             onAddNote={handleAddCategory}
             onShowModalNote={setShowModalNote}
-            categoryId={selectedCategory}
+            categoryId={selectedCategory._id}
             categories={categories}
             setCategories ={setCategories}
           />
@@ -99,10 +99,10 @@ function App() {
         <ul>
           {categories.map(
             (category, index) =>
-              selectedCategory === index && (
+            selectedCategory && selectedCategory._id === category._id && (
                 <NoteList
                   key={index}
-                  list={category.lists}
+                  notes={category.notes}
                   onNoteSelect={handleSelectNote}
                   searchedNotes={searchedNotes}
                   seachText={searchValue}
@@ -118,7 +118,7 @@ function App() {
       <div>
         {selectedNote != null && (
           <NoteViewer
-            key={selectedNote.id}
+            key={selectedNote._id}
             note={selectedNote}
           />
         )}

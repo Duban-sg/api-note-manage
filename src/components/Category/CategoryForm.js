@@ -1,19 +1,39 @@
 import React from "react";
 import {Modal, Button } from 'react-bootstrap';
+import { postCategory } from "../../services/notesServices";
 
 function CategoryForm({ onAddCategory, onShowModalCategory }) {
 
   const [categoryName, setCategoryName] = React.useState("");
+  const [categoryAutor, setCategoryAutor] = React.useState("");
 
-  const handleChange = (event) => {
+  const handleChangeName = (event) => {
     setCategoryName(event.target.value);
   };
+  const handleChangeAutor = (e) => {
+    setCategoryAutor(e.target.value);
+  };
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onAddCategory(categoryName);
-    setCategoryName("");
-    onShowModalCategory(false);
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    const CategoriasIn = {
+      name: categoryName,
+      autor: categoryAutor
+    };
+    
+    try {
+      const response = await postCategory({CategoriasIn});
+      if (!response.ok) {
+        throw new Error("Error al crear una nueva nota");
+      } else {
+        onAddCategory(categoryName);
+        setCategoryName("");
+        onShowModalCategory(false);
+      }
+    } catch (error) {
+      console.error("Error al enviar la solicitud de la nueva nota:", error);
+    }
   };
 
   const handleClose = () => onShowModalCategory(false);
@@ -36,8 +56,18 @@ function CategoryForm({ onAddCategory, onShowModalCategory }) {
           className="form-control"
           id="categoryName"
           value={categoryName}
-          onChange={handleChange}
+          onChange={handleChangeName}
           placeholder="Nombre de la Categoria"
+          
+        />
+        <input
+          type="text"
+          required
+          className="form-control"
+          id="categoryAutor"
+          value={categoryName}
+          onChange={handleChangeAutor}
+          placeholder="Autor"
           
         />
         </Modal.Body>

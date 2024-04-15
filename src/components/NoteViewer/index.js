@@ -1,7 +1,7 @@
 import React from "react";
 import './noteViewer.css';
-import { putNote } from "../../services/notesServices";
 function NoteViewer({ note, onSaveNote }) {
+    
     const [editing, setEditing] = React.useState(false);
     const [editedNote, setEditedNote] = React.useState({ ...note });
 
@@ -18,18 +18,7 @@ function NoteViewer({ note, onSaveNote }) {
 
     };
 
-    const handleSave = async () => {
-        try {
-            // Esperar a que la promesa se resuelva para obtener la respuesta real de la solicitud PUT
-            const response = await putNote(editedNote);
-            
-            onSaveNote(editedNote);
-                // Desactivar el modo de edición
-            setEditing(false);
-        } catch (error) {
-            console.error('Error al guardar la nota:', error);
-        }
-    };
+    
 
     return (
         <div className="note-viewer">
@@ -48,7 +37,7 @@ function NoteViewer({ note, onSaveNote }) {
                             value={editedNote.content}
                             onChange={handleInputChange}
                         ></textarea>
-                        <button onClick={handleSave}>Guardar</button>
+                        <button>Guardar</button>
                     </>
                 ) : (
                     <>
