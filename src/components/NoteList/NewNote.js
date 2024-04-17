@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Modal, Button } from 'react-bootstrap';
 import { postNotes, putCategory } from '../../services/notesServices';
 
-function NewNote({ onShowModalNote,categoryId, categories, setCategories }) {
+function NewNote({ onShowModalNote,categoryId, categories, setCategories, onAutor }) {
 
 const [name, setName] = useState('');
   const [content, setContent] = useState('');
@@ -14,7 +14,7 @@ const [name, setName] = useState('');
     const newNote = {
       title: name,
       content: content,
-      autor: autor
+      autor: onAutor
     };
 
     const updatedCategories = categories.map((category,index) => {
@@ -65,16 +65,7 @@ const [name, setName] = useState('');
             onChange={(e) => setName(e.target.value)}
             required
           />
-          <input
-          type="text"
-          required
-          className="form-control"
-          id="Autor"
-          value={autor}
-          onChange={(e) => setAutor(e.target.value)}
-          placeholder="Autor"
           
-        />
           <textarea
             placeholder="Cuerpo de la nota"
             className="form-control"

@@ -26,7 +26,8 @@ function useCategory() {
   const [selectedCategory, setSelectedCategory] = React.useState(null);
   const [selectedNote, setSelectedNote] = React.useState(null);
   const [searchValue, setSearchValue] = React.useState("");
-
+  const [trigger, setTrigger] = React.useState(false);
+  
   React.useEffect(() => {
     const fetchData = async () => {
       try {
@@ -38,7 +39,12 @@ function useCategory() {
       }
     };
     fetchData();
-  }, []);
+    if (trigger) {
+      fetchData();
+      setTrigger(false); // Restablece el disparador
+    }
+  },[trigger]);
+
   const searchedNotes = categories && categories.filter((category) =>
   category.lists && category.lists.some((list) =>
     list.title && list.title.toLowerCase().includes(searchValue.toLowerCase())
@@ -51,12 +57,13 @@ function useCategory() {
   };
 
   const handleAddCategory = (newCategoryName) => {
-    const newCategory = {
-      _id: categories.length + 1,
-      name: newCategoryName,
-      lists: [],
-    };
-    setCategories([...categories, newCategory]);
+    setTrigger(true);
+    // const newCategory = {
+    //   _id: categories.length + 1,
+    //   name: newCategoryName,
+    //   notes: [],
+    // };
+    // setCategories([...categories, newCategory]);
   };
 
   const handleSelectCategory = (index) => {

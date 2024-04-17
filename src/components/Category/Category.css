@@ -29,7 +29,7 @@
   }
 
   .category.active {
-    background-color: white;
+    background-color: rgb(236, 231, 231);
     color: white; /* Cambia el  de texto a negro cuando la categoría está activa */
   }
   

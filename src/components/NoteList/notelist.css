@@ -4,7 +4,8 @@
 } */
 
 .note-list {
-    margin: 20px; /* Margen exterior */
+    padding: 30px; 
+    background-color: #d9d6d6;
   }
   
   .note-list h2 {
@@ -29,3 +30,8 @@
     background-color: #e0e0e0; /* Color de fondo al pasar por encima */
   }
   
+  .note-list h3 {/* Opcional: si deseas que el título también sea blanco */
+    display: flex;
+    justify-content: space-between; /* Distribuye los elementos a lo largo del contenedor */
+    align-items: center; /* Alinea los elementos verticalmente */
+  }

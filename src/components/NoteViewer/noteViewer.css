@@ -3,17 +3,17 @@
     padding: 20px;
 }
    */
-.note-viewer {
+/* .note-viewer {
   padding: 20px;
   border: 1px solid #ccc;
   border-radius: 5px;
   background-color: #f9f9f9;
-}
+} */
 
 .container {
   text-align: start;
   margin-top: 60px;
-  margin-left: 100px;
+  margin-left: 10px;
   margin-right: 100px;
 }
 
@@ -27,9 +27,10 @@ textarea {
   margin-bottom: 10px;
 }
 
-.note-viewer p {
+.note-viewer  {
   font-size: 1rem;
   line-height: 1.5;
+  background-color: #f4f0f0;
 }
 
 .input-title,
@@ -43,4 +44,13 @@ textarea {
 .input-body {
   font-size: 1rem; /* Tamaño de fuente igual al de p */
   line-height: 1.5; /* Espaciado de línea igual al de p */
+}
+
+.parrafo{
+
+}
+
+.titulo{
+  padding-bottom: 40px;
+  
 }

@@ -1,16 +1,16 @@
-import React from 'react';
-function Notesearch({searchValue,setSearchValue}) {
-
+import React from "react";
+function Notesearch({ searchValue, setSearchValue }) {
   return (
-    <input
-      placeholder="Buscar"
-      className='Search'
-      value={searchValue}
-      onChange={(event) => {
-        setSearchValue(event.target.value);
-      }}
-    />
-    
+    <div>
+      <input      
+        placeholder="Buscar"
+        className="Search my-3"
+        value={searchValue}
+        onChange={(event) => {
+          setSearchValue(event.target.value);
+        }}
+      />
+    </div>
   );
 }
 

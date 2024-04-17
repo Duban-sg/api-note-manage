@@ -7,6 +7,7 @@ import reportWebVitals from "./reportWebVitals";
 import App from "./App/App";
 import configureStore  from "./store/store";
 
+
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
   <Provider store={configureStore}>

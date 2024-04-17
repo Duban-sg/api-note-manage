@@ -28,7 +28,6 @@ async function postCategory({CategoriasIn}){
             body: JSON.stringify(CategoriasIn)
             
           });
-    debugger
           if (!response.ok) {
             throw new Error('Error al crear una nueva nota');
           }

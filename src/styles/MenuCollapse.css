@@ -12,5 +12,6 @@
     grid-template-columns:2.5fr 0.5fr ; /* 1fr para la columna de la lista de notas, 2fr para la columna de la nota seleccionada */
     gap: 10px; /* Espacio entre las columnas */
     grid-row: 3/3;
+    
   }
 

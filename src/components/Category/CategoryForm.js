@@ -2,7 +2,7 @@ import React from "react";
 import {Modal, Button } from 'react-bootstrap';
 import { postCategory } from "../../services/notesServices";
 
-function CategoryForm({ onAddCategory, onShowModalCategory }) {
+function CategoryForm({ onAddCategory, onShowModalCategory, onAutor }) {
 
   const [categoryName, setCategoryName] = React.useState("");
   const [categoryAutor, setCategoryAutor] = React.useState("");
@@ -19,7 +19,7 @@ function CategoryForm({ onAddCategory, onShowModalCategory }) {
 
     const CategoriasIn = {
       name: categoryName,
-      autor: categoryAutor
+      autor: onAutor
     };
     
     try {
@@ -60,7 +60,7 @@ function CategoryForm({ onAddCategory, onShowModalCategory }) {
           placeholder="Nombre de la Categoria"
           
         />
-        <input
+        {/* <input
           type="text"
           required
           className="form-control"
@@ -69,7 +69,7 @@ function CategoryForm({ onAddCategory, onShowModalCategory }) {
           onChange={handleChangeAutor}
           placeholder="Autor"
           
-        />
+        /> */}
         </Modal.Body>
         <Modal.Footer>
           <Button variant="secondary" onClick={handleClose}>
