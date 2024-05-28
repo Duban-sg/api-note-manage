@@ -1,76 +1,59 @@
-import React from 'react';
-import './App.css';
-import { NoteList } from './components/NoteList';
-import { NoteViewer } from './components/NoteViewer';
-import { AddNoteModal } from './components/AddNoteModal';
-import { CreateNoteButton } from './components/CreateNoteButton';
-import { getNotes } from './services/notesServices';
+import React, { useEffect, useState } from "react";
+import CardCategorias from "./components/CardCategorias.js"
+import Editor from "./components/Editor.js"
+import CardNotas from "./components/CardNotas.js"
+import { useDispatch, useSelector } from "react-redux";
+import { iniciarEstadoCategorias, addCategoria, actualizarCategoria } from "./store/CategoriasReduce.js";
+import { getCategories, postCategorias } from './service/categoria';
+import { postNotas } from "./service/notas.js";
 
-function App() {
-  const [selectedNoteIndex, setSelectedNoteIndex] = React.useState(null);
-  const [showAddNoteModal, setShowAddNoteModal] = React.useState(false);
-  const [editingNote, setEditingNote] = React.useState(null);
+export default function App() {
+  const categorias = useSelector((state) => state.categorias.value);
+  const [categoriaSelected, setCategoria] = useState(null)
+  const dispatch = useDispatch();
 
-  
+  const addCategoryFuntion = async (data) => {
+    const categorias = await postCategorias(data);
+    if (categorias !== undefined) dispatch(addCategoria(categorias));
+  }
 
-  const [notes, setNotes] = React.useState([]);
-
-React.useEffect(() => {
-  const fetchData = async () => {
-    try {
-      const notesData = await getNotes();
-      setNotes(notesData);
-    } catch (error) {
-      console.error('Error al obtener las notas:', error);
+  const addNotaFuntion = async (data) => {
+    let categoria = await postNotas(data, categoriaSelected._id);
+    if (categoria !== undefined) {
+      categoria = { indexIcon: categoriaSelected.indexIcon, ...categoria }
+      dispatch(actualizarCategoria(categoria));
+      setCategoria(categoria)
     }
-  };
-  fetchData();
-}, []);
+  }
 
-  const handleNoteSelect = (index) => {
-    setSelectedNoteIndex(index);
-  };
+  const handleObtenerCategorias = async () => {
+    const categoria = await getCategories();
+    if (categoria !== undefined) dispatch(iniciarEstadoCategorias(categoria));
+  }
 
-  const handleAddNote = (newNote) => {
-    setNotes([...notes, newNote]);
-    setShowAddNoteModal(false); 
-  };
+  const handleSelectedReduce = (categoria) => {
+    console.log(categoria)
+    setCategoria(categoria)
+  }
 
-  const handleSaveNote = (editedNote) => {
-    const updatedNotes = [...notes];
-    updatedNotes[selectedNoteIndex] = editedNote;
-    setNotes(updatedNotes);
-  };
+  useEffect(() => {
+    handleObtenerCategorias();
+  }, [])
 
-  const handleDeleteNote = (noteId) => {
-    // Filtrar las notas para eliminar la nota con el ID correspondiente
-    const updatedNotes = notes.filter(note => note.id !== noteId);
-    // Actualizar el estado de la aplicación con las notas filtradas
-    setNotes(updatedNotes);
-
-    
-    
-  };
 
   return (
-    <div className="app">
-
-      <NoteList notes={notes} onNoteSelect={handleNoteSelect} onDeleteNote={handleDeleteNote}/>
-
-      {selectedNoteIndex !== null && (
-        <NoteViewer 
-          note={notes[selectedNoteIndex]} 
-          editingNote={editingNote}
-          onSaveNote={handleSaveNote}
-        />
-      )}
-
-      <CreateNoteButton setShowAddNoteModal={setShowAddNoteModal}/>
-      {showAddNoteModal && (       
-        <AddNoteModal onAddNote={handleAddNote} />
-      )}
+    <div className="relative grid min-h-[100vh] w-screen grid grid-cols-6">
+      <CardCategorias
+        itemSelected={categoriaSelected?._id}
+        onSubmit={addCategoryFuntion}
+        onSelectCategory={handleSelectedReduce}
+        categorias={categorias}
+        name="Duban Sierra" />
+      <CardNotas
+        categorySelected={categoriaSelected}
+        onSubmit={addNotaFuntion}
+      />
+      <Editor></Editor>
     </div>
   );
 }
-
-export default App;
