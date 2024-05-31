@@ -1,19 +1,47 @@
-import { Card } from '@material-tailwind/react';
-import React, { useState } from 'react';
-import ReactQuill from 'react-quill';
+import { Button, Card, Typography } from '@material-tailwind/react';
+import React, { useEffect, useState } from 'react';
 import 'react-quill/dist/quill.snow.css';
+import LastModificateDate from './LastModificateDate';
+import CustomEditor from './CustomEditor';
 
-function Editor() {
-  const [value, setValue] = useState('');
+function Editor({ nota, onSaveChange = () => { } }) {
+  const [editorHtml, setEditorHtml] = useState('')
 
-  return <Card className='h-[calc(100vh-2rem)] w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5 grid grid-cols-subgrid col-span-4'>
-    <div class="col-span-4 p-4">
-      <ReactQuill
-        className='h-[calc(100vh-8rem)] w-full' 
-        theme="snow" value={value} onChange={setValue} />
-    </div>
 
-  </Card>;
+  const handleSaveChange = () => {
+    let _nota = {...nota, content: editorHtml };
+    onSaveChange(_nota);
+  }
+
+  const handleSetEditor = (html) => {
+    
+    setEditorHtml(html); 
+  }
+
+
+  useEffect(() => {
+    setEditorHtml(nota.content);
+  }, [nota])
+
+  return <div className='h-[calc(100vh-2rem)] w-full max-w-[20rem] gap-2  grid grid-cols-8 grid-cols-subgrid col-span-4'>
+    <Card className="row-span-1 col-span-4 p-4 flex flex-row justify-between">
+      <div className="row-span-1 px-4 flex flex-col justify-evenly">
+        <div className="grid grid-cols-12">
+          <LastModificateDate fechaCreacion={nota?.fecha_creacion} fechaModificacion={nota?.fecha_modificacion} />
+        </div>
+        <Typography className="" variant="h5" color="blue-gray">
+          {nota?.title}
+        </Typography>
+      </div>
+      <div className="px-8 flex flex-col justify-center">
+        <Button onClick={handleSaveChange} >Guardar cambios</Button>
+      </div>
+
+    </Card>
+
+    <CustomEditor editorHtml={editorHtml} setEditorHtml={handleSetEditor} />
+
+  </div>;
 }
 
 export default Editor;

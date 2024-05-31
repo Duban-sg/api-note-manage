@@ -1,0 +1,23 @@
+.custom-editor {
+    width: 100%;
+    height: 100%;
+    box-sizing: border-box;
+    padding-bottom: 3rem;
+}
+.ql-snow.ql-toolbar {
+    display: block;
+    border-radius: 0.5em;
+    margin-bottom: 0.5rem;
+    border-color: #E5E5E5;
+}
+
+.custom-editor .ql-container {
+    border-bottom-left-radius: 0.5em;
+    border-bottom-right-radius: 0.5em;
+    border-radius: 0.5em;
+    border-color: #E5E5E5;
+}
+
+.custom-editor .quill {
+    min-height: 100%;
+}
